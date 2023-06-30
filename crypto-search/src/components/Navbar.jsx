@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import { AiOutlineMenu } from "react-icons/ai";
 
 const Navbar = () => {
+  const [nav, setNav] = useState(false);
+
+  const handleNav = () => {
+    setNav(!nav);
+  };
   return (
     <div className="rounded-div flex items-center justify-between h-20px font-bold">
       <Link to="/">
@@ -12,7 +17,7 @@ const Navbar = () => {
       <div className="hidden md:block">
         <ThemeToggle />
       </div>
-      <div classname="hidden md:block">
+      <div className="hidden md:block">
         <Link to="/signin" className="p-4 hover:text-accent">
           Sign In
         </Link>
@@ -24,28 +29,38 @@ const Navbar = () => {
         </Link>
       </div>
       {/* menu icon */}
-      <div className="block md:hidden cursor-pointer z-10">
-        <AiOutlineMenu />
+      <div onClick={handleNav} className="block md:hidden cursor-pointer z-10">
+        {nav ? <AiOutlineMenu size={20} /> : <AiOutlineMenu size={20} />}
       </div>
       {/* Mobile menu*/}
-      <div>
-        <ul>
-          <li>
+      <div
+        className={
+          nav
+            ? "md:hidden fixed left-0 top-20 flex flex-col items-center justify-between w-full h-[90%] bg-primary ease-in duration-300 z-10"
+            : "fixed left-[-100%] top-20 h-[90%] flex flex-col items-center justify-between ease-in duration-300"
+        }
+      >
+        <ul className="w-full p-4">
+          <li className="border-b py-6">
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className="border-b py-6">
             <Link to="/">Account</Link>
           </li>
-          <li>
+          <li className="py-6">
             <ThemeToggle />
           </li>
         </ul>
-        <div>
+        <div className="flex flex-col w-full p-4">
           <Link to="/signin">
-            <button>Sign In</button>
+            <button className="w-full my-2 p-3 bg-primary border border-secondary rounded-2xl shadow-xl">
+              Sign In
+            </button>
           </Link>
           <Link to="/signup">
-            <button>Sign Up</button>
+            <button className="w-full my-2 p-3 bg-primary text-btnText rounded-2xl shadow-xl">
+              Sign Up
+            </button>
           </Link>
         </div>
       </div>
